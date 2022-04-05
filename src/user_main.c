@@ -29,6 +29,7 @@
 
 #include "driver/uart.h"
 
+#include "user_oled.h"
 
 /******************************************************************************
  * FunctionName : user_rf_cal_sector_set
@@ -101,14 +102,29 @@ user_rf_pre_init(void)
 void ICACHE_FLASH_ATTR
 user_init(void)
 {
-	uart_init(9600,9600);	//³õÊ¼»¯²¨ÌØÂÊ
+	uart_init(9600,9600);	//åˆå§‹åŒ–ä¸²å£
+    
+    os_delay_us(10000);
 
 	os_printf("\r\n---------------------------------\r\n");
 
-	os_printf("SDK version:%s\n",system_get_sdk_version());		// ´®¿Ú´òÓ¡SDK°æ±¾
+	os_printf("SDK version:%s\n",system_get_sdk_version());	 //è¾“å‡ºSDKç‰ˆæœ¬
 
 	uart0_sendStr("\r\nHello World\r\n");
 
 	os_printf("\r\n---------------------------------\r\n");
+
+    // OLEDåˆå§‹åŒ–
+    OLED_Init();
+    OLED_Clear();
+    OLED_ShowCHinese(0,0,0);//å•
+    OLED_ShowCHinese(18,0,1);//ç‰‡
+    OLED_ShowCHinese(36,0,2);//æœº
+    OLED_ShowCHinese(54,0,3);//çˆ±
+    OLED_ShowCHinese(72,0,4);//å¥½
+    OLED_ShowCHinese(90,0,5);//è€…
+    OLED_ShowCHinese(108,0,6);//è€…
+    OLED_ShowString(0,3,"ESP8266 = AP",16);
+    OLED_ShowString(0,6,"IP:",16);
 }
 
